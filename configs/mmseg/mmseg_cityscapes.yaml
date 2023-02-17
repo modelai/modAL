@@ -1,0 +1,13 @@
+model:
+    # relative to mmseg_code_dir
+    config: configs/fastscnn/fast_scnn_lr0.12_8x4_160k_cityscapes.py
+data:
+    root_dir: /data1/wangjiaxin/cvdatasets/cityscapes
+    class_names: ['road', 'sidewalk', 'building', 'wall', 'fence', 'pole',
+               'traffic light', 'traffic sign', 'vegetation', 'terrain', 'sky',
+               'person', 'rider', 'car', 'truck', 'bus', 'train', 'motorcycle',
+               'bicycle']
+train:
+    # support mmsegmentation 0.30.0
+    gpu: 4
+    mmseg_code_dir: '/data1/wangjiaxin/gnu/mmsegmentation'
