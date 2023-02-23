@@ -11,3 +11,24 @@ train:
     # support mmsegmentation 0.30.0
     gpu: 4
     mmseg_code_dir: '/data1/wangjiaxin/gnu/mmsegmentation'
+mining:
+    mining_algorithm: rsal
+    fp16: True
+    samples_per_gpu: 2
+    topk_superpixel_score: 3
+    aug_test: False
+    # the omega output config file, need to add index_file and config_file
+    omega_config_file: ./omega_config.yaml
+    # mmsegmentation config file
+    config_file: xxx.py
+    checkpoint: xxx.pt
+    # rsal hyper-parameters
+    uncertainty_method: BvSB
+    superpixel_algorithm: slico # seeds, slic, slico, mslic
+    class_balance: True
+    max_superpixel_per_image: 1024
+    max_kept_mining_image: 5000
+    # ripu hyper-parameters
+    ripu_region_radius: 1
+output:
+    root_dir: /data1/wangjiaxin/tmp

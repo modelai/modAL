@@ -35,14 +35,14 @@ class CityscapesDataset(Dataset):
 
         assert split in ['train', 'val', 'test']
 
-        self.img_paths = glob.glob(osp.join(self.root_dir, img_dir, '**', '*' + img_suffix), recursive=True)
+        self.img_paths = glob.glob(osp.join(self.root_dir, img_dir, split, '**', '*' + img_suffix), recursive=True)
 
         if len(self.img_paths) == 0:
             print(f'not find image under {self.root_dir} {img_dir} with {img_suffix}')
 
         assert len(self.img_paths) > 0, f'not find image under {self.root_dir} {img_dir} with {img_suffix}'
 
-        self.lbl_paths = glob.glob(osp.join(self.root_dir, ann_dir, '**', '*' + seg_map_suffix), recursive=True)
+        self.lbl_paths = glob.glob(osp.join(self.root_dir, ann_dir, split, '**', '*' + seg_map_suffix), recursive=True)
 
         assert len(self.lbl_paths) == len(self.img_paths)
 
