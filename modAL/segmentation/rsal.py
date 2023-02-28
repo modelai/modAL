@@ -207,7 +207,7 @@ def main() -> int:
 
     if RANK in [0, -1]:
         # note we remove normalization here
-        need_class_balance: bool = cfg.class_balance
+        need_class_balance: bool = cfg.mining.class_balance
         if need_class_balance:
             # add background class
             class_num = len(cfg.data.class_names)

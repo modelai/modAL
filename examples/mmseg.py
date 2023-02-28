@@ -22,10 +22,10 @@ for split in ['train', 'val']:
     X[split] = dataset[split].img_paths
     y[split] = dataset[split].lbl_paths
 
-    if split == 'val':
-        sample_idx = np.random.choice(range(len(X[split])), size=500, replace=False)
-        X[split] = [X[split][idx] for idx in sample_idx]
-        y[split] = [y[split][idx] for idx in sample_idx]
+    # if split == 'val':
+    sample_idx = np.random.choice(range(len(X[split])), size=200, replace=False)
+    X[split] = [X[split][idx] for idx in sample_idx]
+    y[split] = [y[split][idx] for idx in sample_idx]
 
 # assemble initial data
 n_initial = 100
@@ -66,7 +66,7 @@ max_epoches = [i // 10 for i in max_epoches]
 scores = dict(random_init=init_score)
 
 for idx in range(n_queries):
-    query_idx, query_instance = learner.query(X_pool, n_instances=100, omega_config_file=model.dump_omega_config())
+    query_idx, query_instance = learner.query(X_pool, n_instances=3, omega_config_file=model.dump_omega_config())
 
     origin_query_idx = [pool_index[idx] for idx in query_idx]
     X_query = [X['train'][idx] for idx in origin_query_idx]
