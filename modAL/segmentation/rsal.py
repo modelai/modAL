@@ -107,14 +107,20 @@ def iter_fun(cfg, model, idx, batch) -> List[Dict]:
     os.makedirs(osp.join(save_dir, 'superpixel'), exist_ok=True)
     max_superpixel_per_image = int(cfg.mining.max_superpixel_per_image)
     for idx, meta in enumerate(batch_meta):
-        superpixel = get_superpixel(cfg, img=meta['filename'], max_superpixels=max_superpixel_per_image)
-        unc_list = get_uncertainty_info(cfg, batch_result[idx], superpixel)
 
-        # cannot use cv2.imwrite to save superpixel
-        pil_img = Image.fromarray(superpixel, mode='I')
         png_basename = osp.splitext(osp.basename(meta['filename']))[0] + '.png'
         superpixel_filepath = osp.join(save_dir, 'superpixel', png_basename)
-        pil_img.save(superpixel_filepath)
+        if osp.exists(superpixel_filepath):
+            load_img = Image.open(superpixel_filepath, mode='I')
+            superpixel = np.array(load_img)
+        else:
+            superpixel = get_superpixel(cfg, img=meta['filename'], max_superpixels=max_superpixel_per_image)
+            # cannot use cv2.imwrite to save superpixel
+            pil_img = Image.fromarray(superpixel, mode='I')
+
+            pil_img.save(superpixel_filepath)
+
+        unc_list = get_uncertainty_info(cfg, batch_result[idx], superpixel)
 
         image_results.append(
             dict(image_filepath=meta['filename'], superpixel_filepath=superpixel_filepath, unc_list=unc_list))
